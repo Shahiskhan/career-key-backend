@@ -1,0 +1,63 @@
+### Custom Sensitive Files (Keys/Configs) ###
+# Isse aapki properties files ignore ho jayengi
+src/main/resources/application.properties
+src/main/resources/application.yml
+src/main/resources/*.properties
+src/main/resources/*.yml
+
+### Java & Maven ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+### Compiled class file ###
+*.class
+
+### Log files ###
+*.log
+
+### Virtual Machine temp files ###
+*.vm
+*.vmb
+
+### STS (Spring Tool Suite) ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+gen/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+### OS Files ###
+.DS_Store
+Thumbs.db
+
+### Help & Wrappers ###
+HELP.md
+.mvn/
+mvnw
+mvnw.cmd
