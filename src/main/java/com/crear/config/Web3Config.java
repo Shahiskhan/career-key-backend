@@ -6,6 +6,7 @@ import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
+import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.tx.gas.StaticGasProvider;
 
 import java.math.BigInteger;
@@ -32,6 +33,11 @@ public class Web3Config {
     @Bean
     public Credentials credentials() {
         return Credentials.create(PRIVATE_KEY);
+    }
+
+    @Bean
+    public DefaultGasProvider defaultGasProvider() {
+        return new DefaultGasProvider();
     }
 
     @Bean
