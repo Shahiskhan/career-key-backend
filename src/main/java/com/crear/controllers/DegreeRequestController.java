@@ -142,4 +142,5 @@ public class DegreeRequestController {
                                                 .data(result)
                                                 .build());
         }
+
 }

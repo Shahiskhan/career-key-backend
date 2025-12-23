@@ -13,6 +13,9 @@ public interface UniversityRepository extends JpaRepository<University, UUID> {
     // find by university name
     Optional<University> findByName(String name);
 
+    // existsByCharterNumber
+    boolean existsByCharterNumber(String charterNumber);
+
     // find by user id
     Optional<University> findByUserId(UUID userId);
 

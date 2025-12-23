@@ -8,6 +8,7 @@ import com.crear.entities.DegreeRequest;
 import com.crear.entities.Student;
 import com.crear.entities.University;
 import com.crear.enums.RequestStatus;
+import com.crear.exceptions.ResourceNotFoundException;
 import com.crear.repositories.DegreeRequestRepository;
 import com.crear.repositories.StudentRepository;
 import com.crear.repositories.UniversityRepository;
@@ -29,7 +30,7 @@ public class DegreeRequestServiceImpl implements DegreeRequestService {
         private final StudentRepository studentRepository;
         private final UniversityRepository universityRepository;
 
-        // ================= CREATE =================
+        // CREATE
         @Override
         @Transactional
         public DegreeRequestDto createDegreeRequest(
@@ -63,7 +64,16 @@ public class DegreeRequestServiceImpl implements DegreeRequestService {
                 return mapToDto(savedRequest);
         }
 
-        // ================= UNIVERSITY =================
+        @Override
+        public DegreeRequest getDegreeRequestById(UUID degreeRequestId) {
+
+                DegreeRequest request = degreeRequestRepository.findById(degreeRequestId)
+                                .orElseThrow(() -> new ResourceNotFoundException(
+                                                "didnot found degreeRequest for this id" + degreeRequestId));
+                return request;
+        }
+
+        // UNIVERSITY
 
         @Override
         public Optional<Page<DegreeRequestDto>> getDegreeRequestsByUniversity(
@@ -89,7 +99,7 @@ public class DegreeRequestServiceImpl implements DegreeRequestService {
                 return mapToDtoPage(entityPage);
         }
 
-        // ================= STUDENT =================
+        // STUDENT
 
         @Override
         public Optional<Page<DegreeRequestDto>> getDegreeRequestsByStudent(
@@ -115,7 +125,7 @@ public class DegreeRequestServiceImpl implements DegreeRequestService {
                 return mapToDtoPage(entityPage);
         }
 
-        // ================= ADMIN / HEC =================
+        // ADMIN HEC
 
         @Override
         public Optional<Page<DegreeRequestDto>> getDegreeRequestsByStatus(
@@ -173,4 +183,5 @@ public class DegreeRequestServiceImpl implements DegreeRequestService {
                                 .remarks(request.getRemarks())
                                 .build();
         }
+
 }

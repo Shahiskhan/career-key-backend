@@ -47,7 +47,6 @@ public class AuthController {
     private final JwtService jwtService;
     private final AuthService authService;
     private final CookieService cookieService;
-    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {

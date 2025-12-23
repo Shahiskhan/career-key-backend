@@ -4,6 +4,7 @@ import com.crear.enums.RequestStatus;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -11,12 +12,14 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 public class DegreeRequestDto {
+
+    private UUID id;
     private String studentName;
     private String universityName;
     private String program;
     private String rollNumber;
     private Integer passingYear;
-    private  boolean stampedByHec;
+    private boolean stampedByHec;
     private Double cgpa;
     private String documentPath;
     private Instant requestDate;

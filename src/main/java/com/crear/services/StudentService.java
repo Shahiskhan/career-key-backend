@@ -6,4 +6,7 @@ import com.crear.entities.Student;
 
 public interface StudentService {
     Student createStudent(StudentRegDto dto, User user);
+
+    Student getBy(String studentId);
+
 }

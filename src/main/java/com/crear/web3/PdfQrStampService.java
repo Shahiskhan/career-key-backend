@@ -50,4 +50,5 @@ public class PdfQrStampService {
         return outputStream.toByteArray();
         // return processed PDF bytes
     }
+
 }

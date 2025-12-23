@@ -40,4 +40,10 @@ public class StudentServiceImpl implements StudentService {
 
         return studentRepository.save(student);
     }
+
+    @Override
+    public Student getBy(String studentId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBy'");
+    }
 }

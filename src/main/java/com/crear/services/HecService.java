@@ -6,4 +6,6 @@ import com.crear.entities.Hec;
 
 public interface HecService {
     Hec createHec(HecRegDto dto, User user);
+
+    void validateHecCreation(HecRegDto dto);
 }

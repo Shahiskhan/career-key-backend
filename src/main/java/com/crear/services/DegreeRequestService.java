@@ -12,6 +12,8 @@ import java.util.UUID;
 
 public interface DegreeRequestService {
 
+        DegreeRequest getDegreeRequestById(UUID degreeRequestId);
+
         DegreeRequestDto createDegreeRequest(
                         DegreeRequestCreateDto dto,
                         DocInfo documents);

@@ -2,7 +2,7 @@ package com.crear.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import java.util.HashSet;
-
+import com.crear.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -65,13 +65,31 @@ public class AuthService {
     // Student registration
     public RegisterResponse registerStudent(StudentRegisterRequest req) {
         validateUser(req.getEmail());
+
+        try {
+            // First create student record
+            StudentRegDto dto = new StudentRegDto();
+            dto.setCnic(req.getCnic());
+            dto.setFullName(req.getName());
+            dto.setDateOfBirth(req.getDateOfBirth());
+            dto.setGender(req.getGender());
+            dto.setContactNumber(req.getContactNumber());
+            dto.setAddress(req.getAddress());
+
+            // Try to create student first
+            // studentService.validateStudentCreation(dto);
+
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Cannot register student: " + e.getMessage());
+        }
+
+        // Only create user if student can be created
         User user = createBaseUser(req.getEmail(), req.getPassword(), req.getName(), req.getImage());
-
-        // Assign role
         user.getRoles().add(Role.STUDENT);
-
         User savedUser = userRepository.save(user);
 
+        // Now actually create student with user
         StudentRegDto dto = new StudentRegDto();
         dto.setCnic(req.getCnic());
         dto.setFullName(req.getName());
@@ -79,50 +97,86 @@ public class AuthService {
         dto.setGender(req.getGender());
         dto.setContactNumber(req.getContactNumber());
         dto.setAddress(req.getAddress());
-
         studentService.createStudent(dto, savedUser);
 
         return toResponse(savedUser);
     }
 
-    // University registration
+    // University registration - CHANGED
     public RegisterResponse registerUniversity(UniversityRegisterRequest req) {
         validateUser(req.getEmail());
+
+        // First validate if university can be created
+        try {
+            UniReg dto = new UniReg();
+            dto.setName(req.getUniversityName());
+            dto.setCity(req.getCity());
+            dto.setCharterNumber(req.getCharterNumber());
+            dto.setIssuingAuthority(req.getIssuingAuthority());
+            dto.setHecRecognized(req.getHecRecognized());
+
+            // Validate university creation before creating user
+            universityService.validateUniversityCreation(dto);
+
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Cannot register university: " + e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Invalid university data: " + e.getMessage());
+        }
+
+        // Only create user if university can be created
         User user = createBaseUser(req.getEmail(), req.getPassword(), req.getName(), req.getImage());
-
-        // Assign role
         user.getRoles().add(Role.UNIVERSITY);
-
         User savedUser = userRepository.save(user);
 
+        // Now actually create university with user
         UniReg dto = new UniReg();
         dto.setName(req.getUniversityName());
         dto.setCity(req.getCity());
         dto.setCharterNumber(req.getCharterNumber());
         dto.setIssuingAuthority(req.getIssuingAuthority());
         dto.setHecRecognized(req.getHecRecognized());
-
         universityService.createUniversity(dto, savedUser);
 
         return toResponse(savedUser);
     }
 
-    // HEC registration
+    // HEC registration - CHANGED
     public RegisterResponse registerHec(HecRegisterRequest req) {
         validateUser(req.getEmail());
+
+        // First validate if HEC can be created
+        try {
+            HecRegDto dto = new HecRegDto();
+            dto.setHecCode(req.getHecCode());
+            dto.setName(req.getName());
+            dto.setHeadOfficeAddress(req.getHeadOfficeAddress());
+            dto.setDigitalSealCertPath(req.getDigitalSealCertPath());
+
+            // Validate HEC creation before creating user
+            hecService.validateHecCreation(dto);
+
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Cannot register HEC: " + e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Invalid HEC data: " + e.getMessage());
+        }
+
+        // Only create user if HEC can be created
         User user = createBaseUser(req.getEmail(), req.getPassword(), req.getName(), req.getImage());
-
-        // Assign role
         user.getRoles().add(Role.HEC);
-
         User savedUser = userRepository.save(user);
 
+        // Now actually create HEC with user
         HecRegDto dto = new HecRegDto();
         dto.setHecCode(req.getHecCode());
         dto.setName(req.getName());
         dto.setHeadOfficeAddress(req.getHeadOfficeAddress());
         dto.setDigitalSealCertPath(req.getDigitalSealCertPath());
-
         hecService.createHec(dto, savedUser);
 
         return toResponse(savedUser);

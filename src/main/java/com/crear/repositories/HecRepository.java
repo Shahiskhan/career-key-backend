@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HecRepository extends JpaRepository<Hec, UUID> {
+  // existsByHecCode
+  boolean existsByHecCode(String hecCode);
 }
