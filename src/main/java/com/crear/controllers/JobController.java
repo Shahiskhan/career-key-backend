@@ -19,16 +19,13 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/jobs")
+@RequestMapping("/api/v1/student/jobs")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class JobController {
 
     private final JobFetchingService jobFetchingService;
 
-    /**
-     * Test endpoint to fetch jobs
-     */
     @GetMapping("/fetch")
     public ResponseEntity<JobFetchResponse> fetchJobs(
             @RequestParam String keywords) {

@@ -15,6 +15,7 @@ import com.crear.auth.model.Role;
 import com.crear.auth.model.User;
 import com.crear.auth.repository.UserRepository;
 import com.crear.dtos.*;
+import com.crear.entities.University;
 import com.crear.services.HecService;
 import com.crear.services.StudentService;
 import com.crear.services.UniversityService;
@@ -91,12 +92,14 @@ public class AuthService {
 
         // Now actually create student with user
         StudentRegDto dto = new StudentRegDto();
+        dto.setRollnumber(req.getRollNumber());
         dto.setCnic(req.getCnic());
         dto.setFullName(req.getName());
         dto.setDateOfBirth(req.getDateOfBirth());
         dto.setGender(req.getGender());
         dto.setContactNumber(req.getContactNumber());
         dto.setAddress(req.getAddress());
+        dto.setUniversityId(req.getUniversityId());
         studentService.createStudent(dto, savedUser);
 
         return toResponse(savedUser);
@@ -138,9 +141,10 @@ public class AuthService {
         dto.setCharterNumber(req.getCharterNumber());
         dto.setIssuingAuthority(req.getIssuingAuthority());
         dto.setHecRecognized(req.getHecRecognized());
-        universityService.createUniversity(dto, savedUser);
-
-        return toResponse(savedUser);
+        University u = universityService.createUniversity(dto, savedUser);
+        RegisterResponse rb = toResponse(savedUser);
+        rb.setUniversityId(u.getId());
+        return rb;
     }
 
     // HEC registration - CHANGED

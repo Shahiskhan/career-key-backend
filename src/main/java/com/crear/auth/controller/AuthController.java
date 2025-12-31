@@ -1,5 +1,6 @@
 package com.crear.auth.controller;
 
+import org.springframework.web.cors.*;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,16 +28,19 @@ import com.crear.auth.repository.RefreshTokenRepository;
 import com.crear.auth.repository.UserRepository;
 import com.crear.auth.service.AuthService;
 import com.crear.auth.service.CookieService;
-import com.crear.auth.service.UserService;
+import com.crear.entities.University;
 import com.crear.security.JwtService;
+import com.crear.services.UniversityService;
 
 import java.security.Principal;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
@@ -47,6 +51,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final AuthService authService;
     private final CookieService cookieService;
+    private final UniversityService universityService;
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
@@ -97,10 +102,20 @@ public class AuthController {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user, jti);
 
+        UUID universityId;
+        if (user.getRoles().toString().contains("UNIVERSITY_USER")) {
+            UUID userId = user.getId();
+            University university = universityService.getUniversityByUserId(userId);
+            universityId = university.getId();
+
+        } else {
+            universityId = null;
+        }
+
         // Use CookieUtil (same behavior)
         cookieService.attachRefreshCookie(response, refreshToken, (int) jwtService.getRefreshTtlSeconds());
         cookieService.addNoStoreHeaders(response);
-        UserDto userDto = new UserDto(user.getName(),
+        UserDto userDto = new UserDto(universityId, user.getName(),
                 user.getEmail(), user.isEnabled(), user.getRoles(), user.getImage(), user.getCreatedAt(),
                 user.getUpdatedAt());
 

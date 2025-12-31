@@ -30,6 +30,12 @@ public class DegreeRequestServiceImpl implements DegreeRequestService {
         private final StudentRepository studentRepository;
         private final UniversityRepository universityRepository;
 
+        @Override
+        public void updateDegreeRequest(DegreeRequest degreeRequest) {
+                degreeRequestRepository.save(degreeRequest);
+
+        }
+
         // CREATE
         @Override
         @Transactional
@@ -40,12 +46,9 @@ public class DegreeRequestServiceImpl implements DegreeRequestService {
                 Student student = studentRepository.findByRollNumber(dto.getRollNumber())
                                 .orElseThrow(() -> new RuntimeException(
                                                 "Student not found with roll number: " + dto.getRollNumber()));
-
-                University university = student.getUniversity();
-                if (university == null) {
-                        throw new RuntimeException("University not linked with student: " + dto.getRollNumber());
-                }
-
+                University university = universityRepository.findById(dto.getUniversityId())
+                                .orElseThrow(() -> new RuntimeException(
+                                                "University not found with id: " + dto.getUniversityId()));
                 DegreeRequest request = DegreeRequest.builder()
                                 .student(student)
                                 .university(university)

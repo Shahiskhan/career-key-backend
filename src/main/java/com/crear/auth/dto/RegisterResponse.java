@@ -13,6 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class RegisterResponse {
+    private UUID universityId;
     private UUID id;
     private String email;
     private String name;

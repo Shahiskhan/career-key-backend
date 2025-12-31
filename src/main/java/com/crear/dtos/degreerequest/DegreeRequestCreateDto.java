@@ -1,6 +1,7 @@
 package com.crear.dtos.degreerequest;
 
 import java.util.List;
+import java.util.UUID;
 
 import lombok.*;
 
@@ -13,6 +14,7 @@ public class DegreeRequestCreateDto {
     private String program;
     private String rollNumber;
     private Integer passingYear;
+    private UUID universityId;
 
     private Double cgpa;
     private String remarks;

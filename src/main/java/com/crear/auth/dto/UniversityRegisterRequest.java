@@ -1,11 +1,14 @@
 package com.crear.auth.dto;
 
+import java.util.UUID;
+
 import lombok.Data;
 
 @Data
 public class UniversityRegisterRequest {
 
     // Basic User Fields
+
     private String email;
     private String password;
     private String name;

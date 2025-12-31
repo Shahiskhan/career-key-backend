@@ -60,6 +60,7 @@ public class Dc {
         InputStream inputStream = Files.newInputStream(originalPath);
         OutputStream outputStream = Files.newOutputStream(stampedPath)) {
       PdfReader reader = new PdfReader(inputStream);
+
       PdfStamper stamper = new PdfStamper(reader, outputStream);
 
       Image stamp = Image.getInstance(STAMP_IMAGE_PATH);
@@ -79,7 +80,6 @@ public class Dc {
       reader.close();
     }
 
-    // 6️⃣ Return stamped file path
     return stampedPath.toString();
   }
 

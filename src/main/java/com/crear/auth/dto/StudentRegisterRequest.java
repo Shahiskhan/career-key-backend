@@ -1,6 +1,7 @@
 package com.crear.auth.dto;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import lombok.Data;
 
@@ -14,17 +15,14 @@ public class StudentRegisterRequest {
     private String image;
 
     // Student Specific Fields
+    private String rollNumber;
     private String cnic;
     private LocalDate dateOfBirth;
     private String gender;
     private String contactNumber;
     private String address;
+
     private String universityName;
+    private UUID universityId;
 
-    // private String skillsJson;
-    // private String certificationsJson;
-    // private String internshipsJson;
-
-    // private String resumeDocumentPath;
-    // private Long universityId;
 }

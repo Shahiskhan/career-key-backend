@@ -14,6 +14,8 @@ public interface DegreeRequestService {
 
         DegreeRequest getDegreeRequestById(UUID degreeRequestId);
 
+        void updateDegreeRequest(DegreeRequest degreeRequest);
+
         DegreeRequestDto createDegreeRequest(
                         DegreeRequestCreateDto dto,
                         DocInfo documents);

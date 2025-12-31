@@ -21,7 +21,8 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/degree-requests")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/api/v1/degree-requests")
 @RequiredArgsConstructor
 public class DegreeRequestController {
 

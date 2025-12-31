@@ -1,9 +1,12 @@
 package com.crear.services.impl;
 
 import java.util.List;
+import java.util.UUID;
+
 import com.crear.dtos.UniReg;
 import com.crear.entities.University;
 import com.crear.exceptions.ResourceNotFoundException;
+import com.crear.auth.dto.UniversityDto;
 import com.crear.auth.model.User;
 import com.crear.repositories.UniversityRepository;
 import com.crear.services.UniversityService;
@@ -31,9 +34,14 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public List<String> getAllUniversityNames() {
-        // return universityRepository.findAllUniversityNames();
-        return null;
+    public List<UniversityDto> getAllUniversity() {
+
+        return universityRepository.findAll()
+                .stream()
+                .map(university -> new UniversityDto(
+                        university.getId(),
+                        university.getName()))
+                .toList();
     }
 
     public void validateUniversityCreation(UniReg dto) {
@@ -56,4 +64,11 @@ public class UniversityServiceImpl implements UniversityService {
             // Validate HEC recognition if needed
         }
     }
+
+    @Override
+    public University getUniversityByUserId(UUID userId) {
+        return universityRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("University not found for userId: " + userId));
+    }
+
 }

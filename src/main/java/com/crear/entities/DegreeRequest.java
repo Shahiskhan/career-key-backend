@@ -27,12 +27,12 @@ public class DegreeRequest extends BaseEntity {
     private String rollNumber;
     private Integer passingYear;
     private Double cgpa;
-
     private String documentPath;
 
     // private boolean verifiedByUniversity=false;
     // private boolean stampedByHec=false;
 
+    private String ipfsHash;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "verification_status", nullable = false)

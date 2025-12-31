@@ -20,15 +20,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student createStudent(StudentRegDto dto, User user) {
 
-        University uni = null;
-        // if (dto.getUniversityId() != null) {
-        // uni = universityRepository.findById(dto.getUniversityId())
-        // .orElse(null);
-        // }
+        University uni = universityRepository.findById(dto.getUniversityId())
+                .orElseThrow(() -> new RuntimeException("University not found"));
 
         Student student = Student.builder()
+
                 .user(user)
                 .cnic(dto.getCnic())
+                .rollNumber(dto.getRollnumber())
                 .fullName(dto.getFullName())
                 .dateOfBirth(dto.getDateOfBirth())
                 .gender(dto.getGender())
