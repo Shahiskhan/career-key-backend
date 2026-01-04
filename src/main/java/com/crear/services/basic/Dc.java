@@ -1,6 +1,7 @@
 package com.crear.services.basic;
 
 import com.crear.entities.DegreeRequest;
+import com.crear.enums.DocumentStatus;
 import com.crear.repositories.DegreeRequestRepository;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.*;
@@ -79,6 +80,9 @@ public class Dc {
       stamper.close();
       reader.close();
     }
+    request.setDocumentPath(stampedPath.toString());
+    request.setDocumentStatus(DocumentStatus.HEC_STAMPED);
+    degreeRequestRepository.save(request);
 
     return stampedPath.toString();
   }

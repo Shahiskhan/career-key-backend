@@ -16,6 +16,6 @@ public interface UniversityService {
 
     void validateUniversityCreation(UniReg dto);
 
-    University getUniversityByUserId(UUID userId);
+    UniversityDto getUniversityByUserId(UUID userId);
 
 }

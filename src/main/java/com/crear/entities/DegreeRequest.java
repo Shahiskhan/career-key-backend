@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.Instant;
 
+import com.crear.enums.DocumentStatus;
 import com.crear.enums.RequestStatus;
 
 @Entity
@@ -23,6 +24,9 @@ public class DegreeRequest extends BaseEntity {
     @JoinColumn(name = "university_id", nullable = false)
     private University university;
 
+    @OneToOne(mappedBy = "degreeRequest", cascade = CascadeType.ALL)
+    private BlockchainTransaction blockchainTransaction;
+
     private String program;
     private String rollNumber;
     private Integer passingYear;
@@ -33,12 +37,15 @@ public class DegreeRequest extends BaseEntity {
     // private boolean stampedByHec=false;
 
     private String ipfsHash;
-    
+    private String ipfsProvider;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "verification_status", nullable = false)
     private RequestStatus verificationStatus = RequestStatus.PENDING;
 
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "document_status", nullable = false)
+    private DocumentStatus documentStatus = DocumentStatus.PENDING;
 
     @Builder.Default
     private Instant requestDate = Instant.now();

@@ -8,14 +8,15 @@ import org.web3j.tx.gas.DefaultGasProvider;
 @Service
 public class BlockchainDeployService {
 
-    private final Web3j web3j;
-    private final Credentials credentials;
-    private final DefaultGasProvider gasProvider;
+    // private final Web3j web3j;
+    // private final Credentials credentials;
+    // private final DefaultGasProvider gasProvider;
 
-    public BlockchainDeployService(Web3j web3j, Credentials credentials, DefaultGasProvider gasProvider) {
-        this.web3j = web3j;
-        this.credentials = credentials;
-        this.gasProvider = gasProvider;
-    }
+    // public BlockchainDeployService(Web3j web3j, Credentials credentials,
+    // DefaultGasProvider gasProvider) {
+    // this.web3j = web3j;
+    // this.credentials = credentials;
+    // // this.gasProvider = gasProvider;
+    // }
 
 }

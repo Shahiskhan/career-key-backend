@@ -4,21 +4,36 @@ import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
 
 @Service
+@Slf4j
 public class IpfsService {
 
-    private final OkHttpClient ipfsClient = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient();
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    @Value("${ipfs.mode:local}")
+    @Value("${ipfs.mode:pinata}")
     private String mode;
 
-    @Value("${ipfs.local.gateway.url}")
-    private String localGatewayUrl;
+    // Pinata
+    @Value("${ipfs.pinata.jwt}")
+    private String pinataJwt;
 
+    @Value("${ipfs.pinata.api.url}")
+    private String pinataApiUrl;
+
+    @Value("${ipfs.pinata.gateway.url}")
+    private String pinataGatewayUrl;
+
+    // Infura
     @Value("${ipfs.infura.gateway.url}")
     private String infuraGatewayUrl;
 
@@ -28,69 +43,77 @@ public class IpfsService {
     @Value("${ipfs.infura.project.secret:}")
     private String projectSecret;
 
-    // ✅ Upload file (works for both local & Infura)
+    // Local
+    @Value("${ipfs.local.gateway.url}")
+    private String localGatewayUrl;
+
     public String uploadFile(File file) throws IOException {
-        String targetUrl = getGatewayUrl() + "/add";
+
+        String url = getUploadUrl();
+        log.info("Uploading file to IPFS via: {}", url);
 
         RequestBody fileBody = RequestBody.create(file, MediaType.parse("application/octet-stream"));
-
-        RequestBody requestBody = new MultipartBody.Builder()
+        MultipartBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("file", file.getName(), fileBody)
                 .build();
 
-        Request.Builder requestBuilder = new Request.Builder()
-                .url(targetUrl)
-                .post(requestBody);
+        Request.Builder builder = new Request.Builder().url(url).post(requestBody);
 
-        // 🔐 Add Infura Auth header only if mode = infura
-        if (isInfura()) {
+        // Add Auth Headers
+        if ("pinata".equalsIgnoreCase(mode)) {
+            builder.addHeader("Authorization", "Bearer " + pinataJwt);
+        } else if ("infura".equalsIgnoreCase(mode)) {
             String credentials = projectId + ":" + projectSecret;
             String basicAuth = "Basic " + Base64.getEncoder().encodeToString(credentials.getBytes());
-            requestBuilder.addHeader("Authorization", basicAuth);
+            builder.addHeader("Authorization", basicAuth);
         }
 
-        try (Response response = ipfsClient.newCall(requestBuilder.build()).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("IPFS upload failed: " + response);
-            }
+        try (Response response = client.newCall(builder.build()).execute()) {
 
-            String jsonResponse = response.body().string();
-            String hash = jsonResponse.split("\"Hash\":\"")[1].split("\"")[0];
-            return hash;
+            if (!response.isSuccessful())
+                throw new IOException("IPFS upload failed: " + response);
+
+            String json = response.body().string();
+            JsonNode root = mapper.readTree(json);
+
+            if ("pinata".equalsIgnoreCase(mode))
+                return root.get("IpfsHash").asText();
+            else
+                return root.get("Hash").asText();
         }
     }
 
-    // ✅ Download file (works for both local & Infura)
     public byte[] downloadFile(String hash) throws IOException {
         String fileUrl;
 
-        if (isLocal()) {
-            fileUrl = "http://127.0.0.1:8080/ipfs/" + hash;
-        } else {
-            fileUrl = "https://ipfs.io/ipfs/" + hash;
+        switch (mode.toLowerCase()) {
+            case "pinata":
+                fileUrl = pinataGatewayUrl + hash;
+                break;
+            case "infura":
+                fileUrl = infuraGatewayUrl + "/ipfs/" + hash;
+                break;
+            default:
+                fileUrl = localGatewayUrl + "/ipfs/" + hash;
         }
 
         Request request = new Request.Builder().url(fileUrl).get().build();
-
-        try (Response response = ipfsClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Failed to fetch from IPFS: " + response);
-            }
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful())
+                throw new IOException("Failed to download file: " + response);
             return response.body().bytes();
         }
     }
 
-    // 🧩 Helper methods
-    private boolean isInfura() {
-        return "infura".equalsIgnoreCase(mode);
-    }
-
-    private boolean isLocal() {
-        return "local".equalsIgnoreCase(mode);
-    }
-
-    private String getGatewayUrl() {
-        return isInfura() ? infuraGatewayUrl : localGatewayUrl;
+    private String getUploadUrl() {
+        switch (mode.toLowerCase()) {
+            case "pinata":
+                return pinataApiUrl;
+            case "infura":
+                return infuraGatewayUrl + "/add";
+            default:
+                return localGatewayUrl + "/add";
+        }
     }
 }

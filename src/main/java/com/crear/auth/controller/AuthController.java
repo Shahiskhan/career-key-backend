@@ -7,9 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -28,7 +31,12 @@ import com.crear.auth.repository.RefreshTokenRepository;
 import com.crear.auth.repository.UserRepository;
 import com.crear.auth.service.AuthService;
 import com.crear.auth.service.CookieService;
+import com.crear.entities.Hec;
+import com.crear.entities.Student;
 import com.crear.entities.University;
+import com.crear.repositories.HecRepository;
+import com.crear.repositories.StudentRepository;
+import com.crear.repositories.UniversityRepository;
 import com.crear.security.JwtService;
 import com.crear.services.UniversityService;
 
@@ -43,6 +51,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -52,6 +61,9 @@ public class AuthController {
     private final AuthService authService;
     private final CookieService cookieService;
     private final UniversityService universityService;
+    private final UniversityRepository universityRepository;
+    private final HecRepository hecRepository;
+    private final StudentRepository studentRepository;
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
@@ -102,20 +114,10 @@ public class AuthController {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user, jti);
 
-        UUID universityId;
-        if (user.getRoles().toString().contains("UNIVERSITY_USER")) {
-            UUID userId = user.getId();
-            University university = universityService.getUniversityByUserId(userId);
-            universityId = university.getId();
-
-        } else {
-            universityId = null;
-        }
-
         // Use CookieUtil (same behavior)
         cookieService.attachRefreshCookie(response, refreshToken, (int) jwtService.getRefreshTtlSeconds());
         cookieService.addNoStoreHeaders(response);
-        UserDto userDto = new UserDto(universityId, user.getName(),
+        UserDto userDto = new UserDto(user.getId(), user.getName(),
                 user.getEmail(), user.isEnabled(), user.getRoles(), user.getImage(), user.getCreatedAt(),
                 user.getUpdatedAt());
 

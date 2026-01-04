@@ -1,5 +1,6 @@
 package com.crear.dtos.degreerequest;
 
+import com.crear.enums.DocumentStatus;
 import com.crear.enums.RequestStatus;
 import lombok.*;
 
@@ -24,5 +25,10 @@ public class DegreeRequestDto {
     private String documentPath;
     private Instant requestDate;
     private RequestStatus status;
+    private DocumentStatus documentStatus;
     private String remarks;
+    private String documentBase64;
+    private String ipfsHash;
+    private String ipfsProvider;
+
 }

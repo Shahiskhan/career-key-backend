@@ -12,6 +12,18 @@ import java.util.UUID;
 
 public interface DegreeRequestService {
 
+        /**
+         * Verify a degree request by University
+         */
+        DegreeRequestDto verifyByUniversity(UUID degreeRequestId, UUID universityId);
+
+        DegreeRequestDto updateDegreeRequestDto(DegreeRequest degreeRequest);
+
+        /**
+         * Verify a degree request by HEC
+         */
+        DegreeRequestDto verifyByHec(UUID degreeRequestId);
+
         DegreeRequest getDegreeRequestById(UUID degreeRequestId);
 
         void updateDegreeRequest(DegreeRequest degreeRequest);

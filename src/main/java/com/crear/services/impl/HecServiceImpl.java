@@ -6,7 +6,11 @@ import com.crear.entities.Hec;
 import com.crear.exceptions.ResourceNotFoundException;
 import com.crear.repositories.HecRepository;
 import com.crear.services.HecService;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,15 +44,17 @@ public class HecServiceImpl implements HecService {
         }
     }
 
-    // public Hec createHec(HecRegDto dto, User user) {
-    // // Actual creation logic
-    // Hec hec = new Hec();
-    // hec.setHecCode(dto.getHecCode());
-    // hec.setName(dto.getName());
-    // hec.setHeadOfficeAddress(dto.getHeadOfficeAddress());
-    // hec.setDigitalSealCertPath(dto.getDigitalSealCertPath());
-    // hec.setUser(user);
+    @Override
+    public HecRegDto getHecByUser(User user) {
 
-    // return hecRepository.save(hec);
-    // }
+        Hec hec = hecRepository.findByUser(user)
+                .orElseThrow(() -> new UsernameNotFoundException("University not found for user id: " + user.getId()));
+        return HecRegDto.builder()
+                .hecCode(hec.getHecCode())
+                .name(hec.getName())
+                .headOfficeAddress(hec.getHeadOfficeAddress())
+                .digitalSealCertPath(hec.getDigitalSealCertPath())
+                .build();
+    }
+
 }

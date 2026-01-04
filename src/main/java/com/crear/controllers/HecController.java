@@ -25,4 +25,6 @@ public class HecController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    // getHecByUserid
+
 }

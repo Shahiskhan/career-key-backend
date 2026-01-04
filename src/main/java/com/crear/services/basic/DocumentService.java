@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class DocumentService {
@@ -78,5 +81,22 @@ public class DocumentService {
 
         document.write(outputStream);
         document.close();
+
     }
+
+    public byte[] getDocumentByPath(String filePath) {
+        try {
+            Path path = Paths.get(filePath);
+
+            if (!Files.exists(path)) {
+                throw new RuntimeException("File not found at path: " + filePath);
+            }
+
+            return Files.readAllBytes(path);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading file: " + e.getMessage());
+        }
+    }
+
 }
