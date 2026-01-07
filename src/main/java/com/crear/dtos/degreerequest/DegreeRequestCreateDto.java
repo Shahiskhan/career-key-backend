@@ -18,8 +18,6 @@ public class DegreeRequestCreateDto {
 
     private Double cgpa;
     private String remarks;
-    // private List<String> documentPaths;
-
-    // document paths ya names
+   
 
 }
