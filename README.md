@@ -1,18 +1,9 @@
 # 🎓 Career Key Backend - Blockchain-Powered Degree Verification System
 
 ![Project Banner](https://img.freepik.com/free-vector/technology-linkedin-banner-template_742173-30387.jpg?semt=ais_hybrid&w=1200&q=80)  
-<!-- Yeh ek modern tech banner hai – agar change karna ho to Canva se apna bana lo -->
+<!-- Change this banner to your own via Canva if you want something more personal -->
 
 **Secure | Immutable | Decentralized** – Tamper-proof degree attestation using Ethereum blockchain, IPFS, and modern Java stack.
-
-Here are some real-world examples of blockchain-based document/degree verification systems in action:
-
-<grok-card data-id="062ecb" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
-
-
-
-<grok-card data-id="5ed746" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
-
 
 ## 🌟 Overview
 
@@ -42,84 +33,85 @@ This backend powers the entire logic with **enterprise-grade Java/Spring Boot** 
 
 ## 🛠️ Technology Stack
 
-Java + Spring Boot + Blockchain integration – powerful combo!
+- **Java 21** ☕  
+- **Spring Boot** 🌱 (REST APIs, Security, Data JPA)  
+- **Maven** 🛠️ – Build & Dependency Management  
+- **PostgreSQL** 🐘 – Relational Database  
+- **Solidity** 🔷 & **Web3j** – Ethereum Blockchain Integration  
+- **IPFS** 📦 – Decentralized File Storage  
+- **Spring Security + JWT** 🔒 – Authentication & Authorization  
+- **Docker & Docker Compose** 🐳 – Containerization  
+- **Lombok** ✨ – Reduce Boilerplate  
+- QR Code Generation & Payment SDKs  
 
-Here are some visuals showing Java/Web3j in blockchain development:
-
-<grok-card data-id="7e63db" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
-
+Modern, scalable stack loved by recruiters!
 
 ## How It Works – Secure 4-Step Attestation Workflow
 
-Here are examples of QR codes on certificates for blockchain verification:
+1. **Student Requests Degree** 📝  
+   Student submits request with documents → Backend creates entry in DB.
 
-<grok-card data-id="6824eb" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+2. **University Verification** ✅  
+   Uni admin reviews & approves → Request forwarded to HEC.
 
-
-
-<grok-card data-id="977bea" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
-
-
-1. **Student Requests Degree** 📝 → Backend creates entry in DB.  
-2. **University Verification** ✅ → Uni approves & forwards to HEC.  
-3. **HEC 4-Step Attestation** (Core Magic!):  
+3. **HEC 4-Step Attestation** (The Core Magic!):  
    - 🔖 Digital Stamp on Document  
-   - 📤 Upload to IPFS → Get Hash  
-   - 🖨️ Generate & Embed QR Code  
-   - ⛓️ Anchor on Blockchain (IPFS Hash + Roll No. + CNIC)  
-4. **Public Verification** 🔎 → Scan QR → Instant blockchain check!
+   - 📤 Upload Stamped Doc to IPFS → Get Hash  
+   - 🖨️ Generate & Embed QR Code on Document  
+   - ⛓️ Anchor on Blockchain: Store (IPFS Hash + Roll No. + CNIC) in Smart Contract
 
-Architecture examples from similar systems:
+4. **Public Verification** 🔎  
+   Scan QR or query API/blockchain → Instant “Valid/Invalid” result!
 
-<grok-card data-id="c55b87" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
-
+All orchestrated via simple API calls.
 
 ## 🚀 Installation & Quick Start
 
 ### Prerequisites
 - Java 21+  
-- Maven  
-- PostgreSQL  
+- Maven 3.8+  
+- PostgreSQL 15+  
 - Docker (recommended)  
-- Ethereum RPC (Infura/Alchemy)  
-- IPFS access
+- Ethereum RPC (Infura/Alchemy for testnet)  
+- IPFS access (Pinata or local node)
 
 ### Local Setup
 ```bash
+# 1. Clone the repo
 git clone https://github.com/Shahiskhan/career-key-backend.git
 cd career-key-backend
+
+# 2. Setup .env (create from .env.example or manually)
+# Example keys: DB_URL, JWT_SECRET, BLOCKCHAIN_RPC_URL, etc.
+
+# 3. Build & Run
+mvn clean install
+mvn spring-boot:run
 ```
-## 🚀 Installation & Quick Start (continued)
-
-**App runs at:** `http://localhost:8080`  
-**Swagger Docs (if enabled):** `/swagger-ui.html`
-
-### Smart Contracts
-Compile & deploy Solidity files from `solidity/` folder using Remix/Truffle, then update contract address in config.
-
-## 📚 API Endpoints (Key Ones)
-
-```http
-POST   /api/auth/register          → Signup
-POST   /api/auth/login             → Get JWT
-POST   /api/degree/request         → Submit degree
-PUT    /api/degree/verify/{id}     → University approve
-POST   /api/hec/attest/{id}        → Full 4-step HEC process
-GET    /api/degree/verify/{hash}   → Public verification
-```
+App runs at: http://localhost:8080
+Swagger Docs (if enabled): http://localhost:8080/swagger-ui.html
+Smart Contracts
+Compile & deploy Solidity files from solidity/ folder using Remix IDE or Truffle/Hardhat, then update the deployed contract address in your application config.
+📚 API Endpoints (Key Ones)
+httpPOST   /api/auth/register          → User Signup
+POST   /api/auth/login             → Get JWT Token
+POST   /api/degree/request         → Submit Degree Request
+PUT    /api/degree/verify/{id}     → University Approve/Reject
+POST   /api/hec/attest/{id}        → Full 4-step HEC Attestation Process
+GET    /api/degree/verify/{hash}   → Public Degree Verification
 🤝 Contributing
 Pull requests are welcome!
-Focus on:
+Focus areas:
 
-Tests (JUnit)
-Bug fixes
-New features (e.g., full AI integration)
+Adding Tests (JUnit + Mockito)
+Bug fixes & improvements
+New features (e.g., full AI integration for job recommendations)
 
 📄 License
-MIT License – Feel free to use & learn!
+MIT License – Feel free to use, modify, and learn!
 
 Developed with ❤️ by Muhammad Shahis Khan
 BS Computer Science | Full-Stack & Blockchain Developer
 GitHub | LinkedIn
 Open to Junior Java / Spring Boot / Blockchain Developer opportunities in Pakistan! 🚀
-Let's connect & build the future of secure credentials!
+Let's connect and build the future of secure credentials!
