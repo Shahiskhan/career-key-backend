@@ -83,23 +83,26 @@ cd career-key-backend
 mvn clean install
 mvn spring-boot:run
 ```
-App runs at: http://localhost:8080
-Swagger Docs (if enabled): http://localhost:8080/swagger-ui.html
-Smart Contracts
+**App runs at:** `http://localhost:8080`  
+**Swagger Docs (if enabled):** `http://localhost:8080/swagger-ui.html`
 
-Compile & deploy Solidity files from solidity/ folder using Remix IDE or Truffle/Hardhat, then update the deployed contract address in your application config.
-📚 API Endpoints
+### Smart Contracts
+Compile & deploy Solidity files from `solidity/` folder using Remix IDE or Truffle/Hardhat, then update the deployed contract address in your application config.
 
-httpPOST   /api/auth/register          → User Signup
+## 📚 API Endpoints (Key Ones)
+
+```http
+POST   /api/auth/register          → User Signup
 POST   /api/auth/login             → Get JWT Token
 POST   /api/degree/request         → Submit Degree Request
 PUT    /api/degree/verify/{id}     → University Approve/Reject
 POST   /api/hec/attest/{id}        → Full 4-step HEC Attestation Process
 GET    /api/degree/verify/{hash}   → Public Degree Verification
-
+```
 🤝 Contributing
 Pull requests are welcome!
 Focus areas:
+
 Adding Tests (JUnit + Mockito)
 Bug fixes & improvements
 New features (e.g., full AI integration for job recommendations)
@@ -107,8 +110,22 @@ New features (e.g., full AI integration for job recommendations)
 📄 License
 MIT License – Feel free to use, modify, and learn!
 
+<br>
+
 Developed with ❤️ by Muhammad Shahis Khan
+
 BS Computer Science | Full-Stack & Blockchain Developer
-GitHub | LinkedIn
+
+
+  
+    GitHub
+  
+    
+  
+    LinkedIn
+  
+
+
 Open to Junior Java / Spring Boot / Blockchain Developer opportunities in Pakistan! 🚀
+
 Let's connect and build the future of secure credentials!
