@@ -1,6 +1,5 @@
 # 🎓 Career Key Backend - Blockchain-Powered Degree Verification System
 
-
 **Secure | Immutable | Decentralized** – Tamper-proof degree attestation using Ethereum blockchain, IPFS, and modern Java stack.
 
 ## 🌟 Overview
@@ -31,18 +30,19 @@ This backend powers the entire logic with **enterprise-grade Java/Spring Boot** 
 
 ## 🛠️ Technology Stack
 
-- **Java 21** ☕  
-- **Spring Boot** 🌱 (REST APIs, Security, Data JPA)  
-- **Maven** 🛠️ – Build & Dependency Management  
-- **PostgreSQL** 🐘 – Relational Database  
-- **Solidity** 🔷 & **Web3j** – Ethereum Blockchain Integration  
-- **IPFS** 📦 – Decentralized File Storage  
-- **Spring Security + JWT** 🔒 – Authentication & Authorization  
-- **Docker & Docker Compose** 🐳 – Containerization  
-- **Lombok** ✨ – Reduce Boilerplate  
-- QR Code Generation & Payment SDKs  
+<div align="center">
+  <img src="https://img.shields.io/badge/Java-21-red?style=for-the-badge&logo=java&logoColor=white" alt="Java 21" height="30"/>
+  <img src="https://img.shields.io/badge/Spring_Boot-3.2-green?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot" height="30"/>
+  <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Maven" height="30"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" height="30"/>
+  <img src="https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white" alt="Solidity" height="30"/>
+  <img src="https://img.shields.io/badge/Web3j-000000?style=for-the-badge&logo=ethereum&logoColor=white" alt="Web3j" height="30"/>
+  <img src="https://img.shields.io/badge/IPFS-65C2CB?style=for-the-badge&logo=ipfs&logoColor=white" alt="IPFS" height="30"/>
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" height="30"/>
+  <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens" alt="JWT" height="30"/>
+</div>
 
-Modern, scalable stack loved by recruiters!
+Modern, scalable, and recruiter-loved tech stack!
 
 ## How It Works – Secure 4-Step Attestation Workflow
 
@@ -61,8 +61,6 @@ Modern, scalable stack loved by recruiters!
 4. **Public Verification** 🔎  
    Scan QR or query API/blockchain → Instant “Valid/Invalid” result!
 
-All orchestrated via simple API calls.
-
 ## 🚀 Installation & Quick Start
 
 ### Prerequisites
@@ -75,12 +73,11 @@ All orchestrated via simple API calls.
 
 ### Local Setup
 ```bash
-# 1. Clone the repo
 git clone https://github.com/Shahiskhan/career-key-backend.git
 cd career-key-backend
 
 # 2. Setup .env (create from .env.example or manually)
-# Example keys: DB_URL, JWT_SECRET, BLOCKCHAIN_RPC_URL, etc.
+# Example keys: SPRING_DATASOURCE_URL, JWT_SECRET, BLOCKCHAIN_RPC_URL etc.
 
 # 3. Build & Run
 mvn clean install
@@ -89,18 +86,20 @@ mvn spring-boot:run
 App runs at: http://localhost:8080
 Swagger Docs (if enabled): http://localhost:8080/swagger-ui.html
 Smart Contracts
+
 Compile & deploy Solidity files from solidity/ folder using Remix IDE or Truffle/Hardhat, then update the deployed contract address in your application config.
-📚 API Endpoints (Key Ones)
+📚 API Endpoints
+
 httpPOST   /api/auth/register          → User Signup
 POST   /api/auth/login             → Get JWT Token
 POST   /api/degree/request         → Submit Degree Request
 PUT    /api/degree/verify/{id}     → University Approve/Reject
 POST   /api/hec/attest/{id}        → Full 4-step HEC Attestation Process
 GET    /api/degree/verify/{hash}   → Public Degree Verification
+
 🤝 Contributing
 Pull requests are welcome!
 Focus areas:
-
 Adding Tests (JUnit + Mockito)
 Bug fixes & improvements
 New features (e.g., full AI integration for job recommendations)
