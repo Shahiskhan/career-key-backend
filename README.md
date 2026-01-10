@@ -1,7 +1,5 @@
 # 🎓 Career Key Backend - Blockchain-Powered Degree Verification System
 
-![Project Banner](https://img.freepik.com/free-vector/technology-linkedin-banner-template_742173-30387.jpg?semt=ais_hybrid&w=1200&q=80)  
-<!-- Change this banner to your own via Canva if you want something more personal -->
 
 **Secure | Immutable | Decentralized** – Tamper-proof degree attestation using Ethereum blockchain, IPFS, and modern Java stack.
 
