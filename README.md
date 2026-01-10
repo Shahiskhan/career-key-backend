@@ -17,6 +17,10 @@ Built as Final Year Project (FYP), it enables:
 **Frontend Repo:** [career_key_frontend](https://github.com/Shahiskhan/career_key_frontend)  
 **Live Demo:** [https://hec-nexus.netlify.app/](https://hec-nexus.netlify.app/)
 
+## 📋 Documentation
+
+- **[SRS Document](https://github.com/Shahiskhan/career-key-blockchain-backend/blob/main/docs/srs.pdf)** - Complete Software Requirements Specification detailing project requirements, use cases, and system design
+
 ##  Key Features
 
 -  **JWT Role-Based Authentication** (Student, University, HEC Admin)  
